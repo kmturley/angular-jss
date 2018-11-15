@@ -1,0 +1,16 @@
+<h1 [class]="classes.title">JSS Angular5 example</h1>
+<input [class]="classes.area" type="textarea">
+<div [class]="classes.buttons">      
+  <label [class]="classes.redButton" (change)="onRedChanged($event)">
+    <input type="radio" name="color" checked>
+    Red
+  </label>
+  <label [class]="classes.greenButton" (change)="onGreenChanged($event)">
+    <input type="radio" name="color">
+    Green
+  </label>
+  <label [class]="classes.blueButton" (change)="onBlueChanged($event)">
+    <input type="radio" name="color">
+    Blue
+  </label>
+</div>
