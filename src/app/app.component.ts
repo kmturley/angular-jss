@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
 import jss from 'jss';
+
+import { styles, red, green, blue } from './app.component.styles';
+
+interface sheet {
+  readonly classes: Object
+  readonly update: Function
+}
 
 @Component({
   selector: 'app-root',
@@ -13,68 +19,24 @@ export class AppComponent implements OnInit {
   public onGreenChanged: Function
   public onBlueChanged: Function
 
-  private readonly red: string = '#F44336'
-  private readonly green: string = '#4CAF50'
-  private readonly blue: string = '#2196F3'
-
   public ngOnInit(): void {
-    const styles: Object = {
-      title: {
-        textAlign: 'center',
-        backgroundColor: '#E0E0E0',
-        '&:hover': {
-          backgroundColor: '#BDBDBD'
-        }
-      },
-      area: {
-        width: '100%',
-        height: '10rem',
-        color: 'white',
-        backgroundColor: data => data.area.backgroundColor
-      },
-      buttons: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: '1rem'
-      },
-      redButton: this.createButtonStyle(this.red),
-      greenButton: this.createButtonStyle(this.green),
-      blueButton: this.createButtonStyle(this.blue)
-    }
-
     const sheet: sheet = jss.createStyleSheet(styles, { link: true }).attach()
-
     this.classes = sheet.classes
-
-    this.onRedChanged = this.createChangeFunction(sheet, this.red);
-    this.onGreenChanged = this.createChangeFunction(sheet, this.green);
-    this.onBlueChanged = this.createChangeFunction(sheet, this.blue);
-
+    this.onRedChanged = this.createChangeFunction(sheet, red);
+    this.onGreenChanged = this.createChangeFunction(sheet, green);
+    this.onBlueChanged = this.createChangeFunction(sheet, blue);
     sheet.update({
-      area: { backgroundColor: this.red }
+      area: { backgroundColor: red }
     })
-  }
-
-  private createButtonStyle(color: string): Object {
-    return {
-      flex: 'auto',
-      '&:hover': { color }
-    }
   }
 
   private createChangeFunction(sheet: sheet, color: string): (event: Event) => void {
     return (event: Event) => {
       event.stopPropagation()
       event.preventDefault()
-
       sheet.update({
         area: { backgroundColor: color }
       })
     }
   }
-}
-
-interface sheet {
-  readonly classes: Object
-  readonly update: Function
 }
